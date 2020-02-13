@@ -45,8 +45,7 @@ public class Lab2ViewsContainer extends LinearLayout {
      */
     public Lab2ViewsContainer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        // Свои атрибуты описываются в файле res/values/attrs.xml
-        // Эта строчка объединяет возможные применённые к View стили
+        
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Lab2ViewsContainer, defStyleAttr, 0);
 
         minViewsCount = a.getInt(R.styleable.Lab2ViewsContainer_lab2_minViewsCount, 0);
@@ -60,21 +59,12 @@ public class Lab2ViewsContainer extends LinearLayout {
         setViewsCount(minViewsCount);
     }
 
-    /**
-     * Программно создаём {@link TextView} и задаём его атрибуты, альтернативно можно описать его в
-     * xml файле и инфлейтить его через класс LayoutInflater.
-     */
+
     public void incrementViews() {
         TextView textView = new TextView(getContext());
         textView.setPadding(dpToPx(8), dpToPx(8), dpToPx(8), dpToPx(8));
         textView.setTextSize(16);
         textView.setText(String.valueOf(viewsCount++));
-        // У каждого View, который находится внутри ViewGroup есть LayoutParams,
-        // в них содержится информация для лэйаута компонентов.
-        // Базовая реализация LayoutParams содержит только определение ширины и высоты
-        // (то, что мы указываем в xml в атрибутах layout_widget и layout_height).
-        // Получить их можно через метод getLayoutParams у View. Метод addView смотрит, если у View
-        // не установлены LayoutParams, то создаёт дефолтные, вызывая метод generateDefaultLayoutParams
         addView(textView);
     }
 
@@ -95,9 +85,7 @@ public class Lab2ViewsContainer extends LinearLayout {
         return viewsCount;
     }
 
-    /**
-     * Метод трансформирует указанные dp в пиксели, используя density экрана.
-     */
+
     @Px
     public int dpToPx(float dp) {
         if (dp == 0) {
