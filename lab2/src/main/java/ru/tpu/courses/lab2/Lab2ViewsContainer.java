@@ -8,15 +8,15 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 
 import androidx.annotation.Px;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Random;
 
 
-public class Lab2ViewsContainer extends LinearLayout {
+public class Lab2ViewsContainer extends ConstraintLayout {
 
     private int minViewsCount;
     private int viewsCount;
-    private int[] btnId;
 
 
     public Lab2ViewsContainer(Context context) {
@@ -27,7 +27,7 @@ public class Lab2ViewsContainer extends LinearLayout {
     public Lab2ViewsContainer(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
-
+    
 
     public Lab2ViewsContainer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -49,76 +49,88 @@ public class Lab2ViewsContainer extends LinearLayout {
     public void incrementViews() {
         Random random = new Random();
         int widthScreen = Resources.getSystem().getDisplayMetrics().widthPixels;
-        int height=random.nextInt((int)Math.floor(widthScreen*0.83))+1/6*widthScreen;
-         Lab2ViewsContainerHorizontal lab2ViewsContainer;
-         int rowId=(int) Math.floor(this.viewsCount/10);
+        int height = random.nextInt((int) Math.floor(widthScreen * 0.83 / 6)) + 1 / 6 * widthScreen;
+
+        int rowId = (int) Math.floor(this.viewsCount / 10);
+        int columnId = viewsCount % 10;
         int orientation = this.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-           if (this.viewsCount%10!=0 && this.viewsCount%10!=3)
-           {
-               lab2ViewsContainer = findViewById(rowId);
-               if(rowId%2!=0){
-                   lab2ViewsContainer.incrementViews(1,rowId,height);
-               }
 
-               else
-               {
-                   Lab2ViewsContainerHorizontal searchViewContainer=findViewById(rowId-1);
-                   lab2ViewsContainer.incrementViews(1,rowId,widthScreen/3-searchViewContainer.getHeightView(rowId-1,viewsCount%10));
-               }
-               viewsCount++;
-           }
-           else
-           {
-               Lab2ViewsContainerHorizontal newHorizontalContainer=new Lab2ViewsContainerHorizontal(getContext());
-               newHorizontalContainer.setId(rowId+1);
-               addView((newHorizontalContainer));
-               if((rowId+1)%2!=0){
-                   newHorizontalContainer.incrementViews(1,rowId+1,height);
-               }
-
-               else
-               {
-                   Lab2ViewsContainerHorizontal searchViewContainer=findViewById(rowId+1-1);
-                   newHorizontalContainer.incrementViews(1,rowId+1,widthScreen/3-searchViewContainer.getHeightView(rowId+1-1,viewsCount%10));
-               }
-               viewsCount=(rowId+1)*10+1;
-           }
+        if (rowId == 0) {
+            int a = 100;
+            Lab2ViewsContainerHorizontal lab2ViewsContainer;
+            lab2ViewsContainer = findViewById(a);
+            lab2ViewsContainer.incrementViews(1, 1, height, 1);
+            viewsCount = 11;
         } else {
-            if (this.viewsCount%10!=0 && this.viewsCount%10!=6)
-            {
-                lab2ViewsContainer = findViewById(rowId);
-                if(rowId%2!=0){
-                    lab2ViewsContainer.incrementViews(2,rowId,height);
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                if (columnId != 3) {
+                    if (rowId % 2 != 0) {
+                        Lab2ViewsContainerHorizontal lab2ViewsContainer;
+                        lab2ViewsContainer = findViewById(columnId + 1);
+                        lab2ViewsContainer.incrementViews(1, rowId, height, columnId + 1);
+                        viewsCount++;
+                    } else {
+                        Lab2ViewsContainerHorizontal lab2ViewsContainer;
+                        lab2ViewsContainer = findViewById(columnId + 1);
+                        int minusHeight = lab2ViewsContainer.getHeightView(rowId - 1, columnId - 1);
+                        lab2ViewsContainer.incrementViews(1, rowId, widthScreen / 3 - minusHeight, columnId + 1);
+                        viewsCount++;
+
+                    }
+                } else {
+                    int a = 100;
+                    if (rowId % 2 != 1) {
+                        Lab2ViewsContainerHorizontal lab2ViewsContainer;
+                        lab2ViewsContainer = findViewById(a);
+                        lab2ViewsContainer.incrementViews(1, rowId + 1, height, 1);
+                        viewsCount = (rowId + 1) * 10 + 1;
+                    } else {
+                        Lab2ViewsContainerHorizontal lab2ViewsContainer;
+                        lab2ViewsContainer = findViewById(a);
+                        int minusHeight = lab2ViewsContainer.getHeightView(rowId, 1);
+                        lab2ViewsContainer.incrementViews(1, rowId + 1, widthScreen / 3 - minusHeight, 1);
+                        viewsCount = (rowId + 1) * 10 + 1;
+
+                    }
                 }
 
-                else
-                {
-                    Lab2ViewsContainerHorizontal searchViewContainer=findViewById(rowId-1);
-                    lab2ViewsContainer.incrementViews(2,rowId,widthScreen/3-searchViewContainer.getHeightView(rowId-1,viewsCount%10));
-                }
-                viewsCount++;
-            }
-            else
-            {
-                Lab2ViewsContainerHorizontal newHorizontalContainer=new Lab2ViewsContainerHorizontal(getContext());
-                newHorizontalContainer.setId(rowId+1);
-                addView((newHorizontalContainer));
-                if((rowId+1)%2!=0){
-                    newHorizontalContainer.incrementViews(2,rowId+1,height);
-                }
 
-                else
-                {
-                    Lab2ViewsContainerHorizontal searchViewContainer=findViewById(rowId+1-1);
-                    newHorizontalContainer.incrementViews(2,rowId+1,widthScreen/3-searchViewContainer.getHeightView(rowId+1-1,viewsCount%10));
+            } else {
+                if (columnId != 6) {
+                    if (rowId % 2 != 0) {
+                        Lab2ViewsContainerHorizontal lab2ViewsContainer;
+                        lab2ViewsContainer = findViewById(columnId + 1);
+                        lab2ViewsContainer.incrementViews(2, rowId, height, columnId + 1);
+                        viewsCount++;
+                    } else {
+                        Lab2ViewsContainerHorizontal lab2ViewsContainer;
+                        lab2ViewsContainer = findViewById(columnId + 1);
+                        int minusHeight = lab2ViewsContainer.getHeightView(rowId - 1, columnId - 1);
+                        lab2ViewsContainer.incrementViews(2, rowId, widthScreen / 6 - minusHeight, columnId + 1);
+                        viewsCount++;
+
+                    }
+                } else {
+                    int a = 100;
+                    if (rowId % 2 != 1) {
+                        Lab2ViewsContainerHorizontal lab2ViewsContainer;
+                        lab2ViewsContainer = findViewById(a);
+                                lab2ViewsContainer.incrementViews(2, rowId + 1, height, 1);
+                        viewsCount = (rowId + 1) * 10 + 1;
+                    } else {
+                        Lab2ViewsContainerHorizontal lab2ViewsContainer;
+                        lab2ViewsContainer = findViewById(a);
+                        int minusHeight = lab2ViewsContainer.getHeightView(rowId, 1);
+                        lab2ViewsContainer.incrementViews(2, rowId + 1, widthScreen / 6 - minusHeight, 1);
+                        viewsCount = (rowId + 1) * 10 + 1;
+
+                    }
                 }
-                viewsCount=(rowId+1)*10+1;
             }
 
         }
-
     }
+
 
     public void setViewsCount(int viewsCount) {
         if (this.viewsCount == viewsCount) {
@@ -128,6 +140,51 @@ public class Lab2ViewsContainer extends LinearLayout {
 
         removeAllViews();
         this.viewsCount = 0;
+        int orientation = this.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Lab2ViewsContainerHorizontal newContainer=new Lab2ViewsContainerHorizontal(getContext());
+
+            LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            params.leftToRight=R.id.container;
+            params.topToTop=R.id.container;
+            newContainer.setLayoutParams(params);
+            int a=100;
+            newContainer.setId(a);
+            addView(newContainer);
+            for (int i=2;i<4;i++)
+            {
+Lab2ViewsContainerHorizontal newCont=new Lab2ViewsContainerHorizontal(getContext());
+
+                params.leftToRight=findViewById((i-1)*100).getId();
+                params.topToTop=findViewById((i-1)*100).getId();
+                newCont.setLayoutParams(params);
+                newCont.setId(i*100);
+                addView(newContainer);
+            }
+        }
+        else
+        {
+            Lab2ViewsContainerHorizontal newContainer=new Lab2ViewsContainerHorizontal(getContext());
+
+            LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            params.leftToRight=R.id.container;
+            params.topToTop=R.id.container;
+            newContainer.setLayoutParams(params);
+            int a=100;
+            newContainer.setId(a);
+            addView(newContainer);
+            for (int i=2;i<7;i++)
+            {
+
+                Lab2ViewsContainerHorizontal newCont=new Lab2ViewsContainerHorizontal(getContext());
+                params.leftToRight=findViewById((i-1)*100).getId();
+                params.topToTop=findViewById((i-1)*100).getId();
+                newCont.setLayoutParams(params);
+                newCont.setId(i*100);
+                addView(newContainer);
+            }
+        }
+
         for (int i = 0; i < viewsCount; i++) {
             incrementViews();
         }

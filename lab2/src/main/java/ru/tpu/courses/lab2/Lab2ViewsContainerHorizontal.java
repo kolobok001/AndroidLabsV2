@@ -10,11 +10,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Px;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Random;
 
 
-public class Lab2ViewsContainerHorizontal extends LinearLayout {
+public class Lab2ViewsContainerHorizontal extends ConstraintLayout {
 
 
 public int viewHorizontalCount=0;
@@ -46,7 +47,7 @@ public int getHeightView(int rowId,int viewId)
     View view=findViewById(rowId*1000+viewId*100);
     return view.getLayoutParams().height;
 }
-    public void incrementViews(int orientation,int rowId,int height) {
+    public void incrementViews(int orientation,int rowId,int height,int columnId) {
         if (orientation==1) {
             int widthScreen = Resources.getSystem().getDisplayMetrics().widthPixels;
             View view = new View(getContext());
@@ -57,9 +58,9 @@ public int getHeightView(int rowId,int viewId)
             int green = random.nextInt(256);
             int blue = random.nextInt(256);
             view.setBackgroundColor(Color.rgb(red, green, blue));
-            view.setId(rowId*1000+(this.viewHorizontalCount+1)*100);
+            view.setId(rowId*1000+columnId*100);
             addView(view);
-            viewHorizontalCount++;
+
         }
         else
         {
@@ -72,9 +73,9 @@ public int getHeightView(int rowId,int viewId)
             int green = random.nextInt(256);
             int blue = random.nextInt(256);
             view.setBackgroundColor(Color.rgb(red, green, blue));
-            view.setId(rowId*1000+(this.viewHorizontalCount+1)*100);
+            view.setId(rowId*1000+columnId*100);
             addView(view);
-            viewHorizontalCount++;
+
         }
     }
 

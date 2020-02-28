@@ -2,16 +2,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/lab2_guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
 
     <Button
         android:id="@+id/btn_add_view"
@@ -35,10 +30,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:lab2_minViewsCount="0"
-            />
-
+            app:lab2_minViewsCount="0" />
     </ScrollView>
 
 </RelativeLayout>
