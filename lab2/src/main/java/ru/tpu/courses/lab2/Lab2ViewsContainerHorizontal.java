@@ -52,6 +52,9 @@ public int getHeightView(int rowId,int viewId)
             int widthScreen = Resources.getSystem().getDisplayMetrics().widthPixels;
             View view = new View(getContext());
             LayoutParams params = new LayoutParams(widthScreen / 3, height);
+            if(rowId!=1) {
+                params.topToBottom = findViewById((rowId - 1) * 1000 + columnId * 100).getId();
+            }
             view.setLayoutParams(params);
             Random random = new Random(); // Probably really put this somewhere where it gets executed only once
             int red = random.nextInt(256);
@@ -67,6 +70,9 @@ public int getHeightView(int rowId,int viewId)
             int widthScreen = Resources.getSystem().getDisplayMetrics().widthPixels;
             View view = new View(getContext());
             LayoutParams params = new LayoutParams(widthScreen / 6, height);
+            if(rowId!=1) {
+                params.topToBottom = findViewById((rowId - 1) * 1000 + columnId * 100).getId();
+            }
             view.setLayoutParams(params);
             Random random = new Random(); // Probably really put this somewhere where it gets executed only once
             int red = random.nextInt(256);

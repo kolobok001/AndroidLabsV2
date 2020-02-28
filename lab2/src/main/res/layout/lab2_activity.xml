@@ -19,18 +19,59 @@
         />
 
     <ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_add_view"
-        android:layout_alignParentBottom="true"
-        >
+        android:layout_alignParentBottom="true">
 
         <ru.tpu.courses.lab2.Lab2ViewsContainer
             android:id="@+id/container"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:lab2_minViewsCount="0" />
+            app:lab2_minViewsCount="0">
+
+            <ru.tpu.courses.lab2.Lab2ViewsContainerHorizontal
+                android:id="@+id/view24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/view23"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ru.tpu.courses.lab2.Lab2ViewsContainerHorizontal
+                android:id="@+id/view25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/view24"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ru.tpu.courses.lab2.Lab2ViewsContainerHorizontal
+                android:id="@+id/view26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/view25"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ru.tpu.courses.lab2.Lab2ViewsContainerHorizontal
+                android:id="@+id/view21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ru.tpu.courses.lab2.Lab2ViewsContainerHorizontal
+                android:id="@+id/view22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/view21"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ru.tpu.courses.lab2.Lab2ViewsContainerHorizontal
+                android:id="@+id/view23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/view22"
+                app:layout_constraintTop_toTopOf="parent" />
+        </ru.tpu.courses.lab2.Lab2ViewsContainer>
     </ScrollView>
 
 </RelativeLayout>

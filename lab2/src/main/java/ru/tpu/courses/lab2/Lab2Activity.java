@@ -26,10 +26,17 @@ public class Lab2Activity extends AppCompatActivity {
 
         setTitle(getString(R.string.lab2_title, getClass().getSimpleName()));
 
-
-        lab2ViewsContainer = findViewById(R.id.container);
+        int orientation = this.getResources().getConfiguration().orientation;
+       /* if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            lab2ViewsContainer = findViewById(R.id.container1);
+        }
+        else
+        {*/
+            lab2ViewsContainer = findViewById(R.id.container);
+        //}
         findViewById(R.id.btn_add_view).setOnClickListener(view -> lab2ViewsContainer.incrementViews());
         if (savedInstanceState != null) {
+            lab2ViewsContainer.updateLinks();
             lab2ViewsContainer.setViewsCount(savedInstanceState.getInt(STATE_VIEWS_COUNT));
         }
     }
@@ -39,4 +46,5 @@ public class Lab2Activity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_VIEWS_COUNT, lab2ViewsContainer.getViewsCount());
     }
+
 }
