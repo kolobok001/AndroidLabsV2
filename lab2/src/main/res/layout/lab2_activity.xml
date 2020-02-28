@@ -5,8 +5,13 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     >
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/lab2_guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
     <Button
         android:id="@+id/btn_add_view"
@@ -21,18 +26,19 @@
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/btn_add_view"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="118dp">
+        >
 
         <ru.tpu.courses.lab2.Lab2ViewsContainer
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:lab2_minViewsCount="10"
+            app:lab2_minViewsCount="0"
             />
+
     </ScrollView>
+
 </RelativeLayout>

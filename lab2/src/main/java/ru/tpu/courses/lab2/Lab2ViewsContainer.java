@@ -2,47 +2,33 @@ package ru.tpu.courses.lab2;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 
 import androidx.annotation.Px;
 
-/**
- * Простейший пример самописного View. В данном случае мы просто наследуемся от LinearLayout-а и
- * добавляем свою логику, но также есть возможность отнаследоваться от {@link android.view.ViewGroup},
- * если необходимо реализовать контейнер для View полностью с нуля, либо отнаследоваться от {@link android.view.View}.
- * <p/>
- * Здесь можно было бы добавить автоматическое сохранение и восстановление состояния, переопределив методы
- * {@link #onSaveInstanceState()} и {@link #onRestoreInstanceState(Parcelable)}.
- */
+import java.util.Random;
+
+
 public class Lab2ViewsContainer extends LinearLayout {
 
     private int minViewsCount;
     private int viewsCount;
+    private int[] btnId;
 
-    /**
-     * Этот конструктор используется при создании View в коде.
-     */
+
     public Lab2ViewsContainer(Context context) {
         this(context, null);
     }
 
-    /**
-     * Этот конструктор выдывается при создании View из XML.
-     */
+
     public Lab2ViewsContainer(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    /**
-     * Конструктор, вызывается при инфлейте View, когда у View указан дополнительный стиль.
-     * Почитать про стили можно здесь https://developer.android.com/guide/topics/ui/look-and-feel/themes
-     *
-     * @param attrs атрибуты, указанные в XML. Стандартные android атрибуты обрабатываются внутри родительского класса.
-     *              Здесь необходимо только обработать наши атрибуты.
-     */
+
     public Lab2ViewsContainer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         
@@ -61,11 +47,77 @@ public class Lab2ViewsContainer extends LinearLayout {
 
 
     public void incrementViews() {
-        TextView textView = new TextView(getContext());
-        textView.setPadding(dpToPx(8), dpToPx(8), dpToPx(8), dpToPx(8));
-        textView.setTextSize(16);
-        textView.setText(String.valueOf(viewsCount++));
-        addView(textView);
+        Random random = new Random();
+        int widthScreen = Resources.getSystem().getDisplayMetrics().widthPixels;
+        int height=random.nextInt((int)Math.floor(widthScreen*0.83))+1/6*widthScreen;
+         Lab2ViewsContainerHorizontal lab2ViewsContainer;
+         int rowId=(int) Math.floor(this.viewsCount/10);
+        int orientation = this.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+           if (this.viewsCount%10!=0 && this.viewsCount%10!=3)
+           {
+               lab2ViewsContainer = findViewById(rowId);
+               if(rowId%2!=0){
+                   lab2ViewsContainer.incrementViews(1,rowId,height);
+               }
+
+               else
+               {
+                   Lab2ViewsContainerHorizontal searchViewContainer=findViewById(rowId-1);
+                   lab2ViewsContainer.incrementViews(1,rowId,widthScreen/3-searchViewContainer.getHeightView(rowId-1,viewsCount%10));
+               }
+               viewsCount++;
+           }
+           else
+           {
+               Lab2ViewsContainerHorizontal newHorizontalContainer=new Lab2ViewsContainerHorizontal(getContext());
+               newHorizontalContainer.setId(rowId+1);
+               addView((newHorizontalContainer));
+               if((rowId+1)%2!=0){
+                   newHorizontalContainer.incrementViews(1,rowId+1,height);
+               }
+
+               else
+               {
+                   Lab2ViewsContainerHorizontal searchViewContainer=findViewById(rowId+1-1);
+                   newHorizontalContainer.incrementViews(1,rowId+1,widthScreen/3-searchViewContainer.getHeightView(rowId+1-1,viewsCount%10));
+               }
+               viewsCount=(rowId+1)*10+1;
+           }
+        } else {
+            if (this.viewsCount%10!=0 && this.viewsCount%10!=6)
+            {
+                lab2ViewsContainer = findViewById(rowId);
+                if(rowId%2!=0){
+                    lab2ViewsContainer.incrementViews(2,rowId,height);
+                }
+
+                else
+                {
+                    Lab2ViewsContainerHorizontal searchViewContainer=findViewById(rowId-1);
+                    lab2ViewsContainer.incrementViews(2,rowId,widthScreen/3-searchViewContainer.getHeightView(rowId-1,viewsCount%10));
+                }
+                viewsCount++;
+            }
+            else
+            {
+                Lab2ViewsContainerHorizontal newHorizontalContainer=new Lab2ViewsContainerHorizontal(getContext());
+                newHorizontalContainer.setId(rowId+1);
+                addView((newHorizontalContainer));
+                if((rowId+1)%2!=0){
+                    newHorizontalContainer.incrementViews(2,rowId+1,height);
+                }
+
+                else
+                {
+                    Lab2ViewsContainerHorizontal searchViewContainer=findViewById(rowId+1-1);
+                    newHorizontalContainer.incrementViews(2,rowId+1,widthScreen/3-searchViewContainer.getHeightView(rowId+1-1,viewsCount%10));
+                }
+                viewsCount=(rowId+1)*10+1;
+            }
+
+        }
+
     }
 
     public void setViewsCount(int viewsCount) {
@@ -82,7 +134,19 @@ public class Lab2ViewsContainer extends LinearLayout {
     }
 
     public int getViewsCount() {
-        return viewsCount;
+        int rowId=(int) Math.floor(this.viewsCount/10);
+
+        int orientation = this.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            return ((rowId-1)*6+viewsCount%10);
+
+        }
+        else
+        {
+            return ((rowId-1)*3+viewsCount%10);
+
+        }
+
     }
 
 
@@ -94,4 +158,6 @@ public class Lab2ViewsContainer extends LinearLayout {
         float density = getResources().getDisplayMetrics().density;
         return (int) Math.ceil(density * dp);
     }
+
+
 }
