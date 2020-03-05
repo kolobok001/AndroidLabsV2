@@ -8,30 +8,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.Toast;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import  ru.tpu.courses.lab3.ListAdapter;
 
-import ru.tpu.courses.lab3.adapter.StudentsAdapter;
-
-/**
- * <b>RecyclerView, взаимодействие между экранами. Memory Cache.</b>
- * <p>
- * View, добавленные в {@link android.widget.ScrollView} отрисовываются все разом, при этом выводится
- * пользователю только та часть, до которой доскроллил пользователь. Соответственно, это замедляет
- * работу приложения и в случае с особо большим количеством View может привести к
- * {@link OutOfMemoryError}, краша приложение, т.к. система не может уместить все View в памяти.
- * </p>
- * <p>
- * {@link RecyclerView} - компонент для работы со списками, содержащими большое количество данных,
- * который призван исправить эту проблему. Это точно такой же {@link android.view.ViewGroup}, как и
- * ScrollView, но он содержит только те View, которые сейчас видимы пользователю. Работать с ним
- * намного сложнее, чем с ScrollView, поэтому если известно, что контент на экране статичен и не
- * содержит много элементов, то для простоты лучше воспользоваться ScrollView.
- * </p>
- * <p>
- * Для работы RecyclerView необходимо подключить отдельную библиотеку (см. build.gradle)
- * </p>
- */
 public class Lab3Activity extends AppCompatActivity {
 
     private static final int REQUEST_STUDENT_ADD = 1;
@@ -44,8 +41,16 @@ public class Lab3Activity extends AppCompatActivity {
 
     private RecyclerView list;
     private FloatingActionButton fab;
+    private int sortKey;
+    private static final String SORT_KEY = "sort_key";
 
-    private StudentsAdapter studentsAdapter;
+AlertDialog dialog;
+    ExpandableListView expListView;
+    ListAdapter expListAdapter;
+    List<String> expListTitle;
+    HashMap<String, List<String>> expListDetail;
+
+
 
 
     @Override
@@ -58,26 +63,54 @@ public class Lab3Activity extends AppCompatActivity {
         setContentView(R.layout.lab3_activity);
         list = findViewById(android.R.id.list);
         fab = findViewById(R.id.fab);
+        if (savedInstanceState != null)
+            sortKey=savedInstanceState.getInt(SORT_KEY);
+        else
+            sortKey=1;
 
-        /*
-        Здесь идёт инициализация RecyclerView. Первое, что необходимо для его работы, это установить
-        реализацию LayoutManager-а. Он содержит логику размещения View внутри RecyclerView. Так,
-        LinearLayoutManager, который используется ниже, располагает View последовательно, друг за
-        другом, по аналогии с LinearLayout-ом. Из альтернатив можно например использовать
-        GridLayoutManager, который располагает View в виде таблицы. Необходимость написания своего
-        LayoutManager-а возникает очень редко и при этом является весьма сложным процессом, поэтому
-        рассматриваться в лабораторной работе не будет.
-         */
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        list.setLayoutManager(layoutManager);
 
-        /*
-        Следующий ключевой компонент - это RecyclerView.Adapter. В нём описывается вся информация,
-        необходимая для заполнения RecyclerView. В примере мы выводим пронумерованный список
-        студентов, подробнее о работе адаптера в документации к классу StudentsAdapter.
-         */
-        list.setAdapter(studentsAdapter = new StudentsAdapter(sexList));
-        studentsAdapter.setStudents(studentsCache.getStudents());
+
+        expListView = (ExpandableListView) findViewById(R.id.expListView);
+
+        expListDetail=studentsCache.loadData(sortKey,sexList);
+        expListTitle = new ArrayList<>(expListDetail.keySet());
+        expListAdapter = new ListAdapter(this, expListTitle, expListDetail);
+
+        expListView.setAdapter(expListAdapter);
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//подсказка при раскрытии списка
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                /*Toast.makeText(getApplicationContext(),
+                        expListTitle.get(groupPosition) + " Список раскрыт.",
+                        Toast.LENGTH_SHORT).show();*/
+            }
+        });
+
+        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                /*Toast.makeText(getApplicationContext(),
+                        expListTitle.get(groupPosition) + " Список скрыт.",
+                        Toast.LENGTH_SHORT).show();*/
+
+            }
+        });
+
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+               /* Toast.makeText(getApplicationContext(),
+                        expListTitle.get(groupPosition)
+                                + " : " + expListDetail.get(expListTitle.get(groupPosition))
+                                .get(childPosition), Toast.LENGTH_SHORT).show();*/
+                return false;
+            }
+        });
+
+
 
         /*
         При нажатии на кнопку мы переходим на Activity для добавления студента. Обратите внимание,
@@ -113,10 +146,72 @@ public class Lab3Activity extends AppCompatActivity {
             Student student = AddStudentActivity.getResultStudent(data);
 
             studentsCache.addStudent(student);
+            expListDetail=studentsCache.loadData(sortKey,getResources().getStringArray(R.array.lab3_sex_list));
+            expListTitle = new ArrayList<>(expListDetail.keySet());
+            expListAdapter.setData(expListTitle,expListDetail);
+            expListAdapter.notifyDataSetChanged();
 
-            studentsAdapter.setStudents(studentsCache.getStudents());
-            studentsAdapter.notifyItemRangeInserted(studentsAdapter.getItemCount() - 2, 2);
-            list.scrollToPosition(studentsAdapter.getItemCount() - 1);
+
+//            studentsAdapter.setStudents(studentsCache.getStudents());
+//            studentsAdapter.notifyItemRangeInserted(studentsAdapter.getItemCount() - 2, 2);
+//
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.lab3_choise_sort, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() ==R.id.action_choice) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.lab3_title_sorting)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.lab3_nosort, new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            sortKey=1;
+                            expListDetail=studentsCache.loadData(sortKey,getResources().getStringArray(R.array.lab3_sex_list));
+                            expListTitle = new ArrayList<>(expListDetail.keySet());
+                            expListAdapter.setData(expListTitle,expListDetail);
+                            expListAdapter.notifyDataSetChanged();
+
+                        }
+                    }).setNegativeButton(R.string.lab3_sort_by_group, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    sortKey=2;
+                    expListDetail=studentsCache.loadData(sortKey,getResources().getStringArray(R.array.lab3_sex_list));
+                    expListTitle = new ArrayList<>(expListDetail.keySet());
+                    expListAdapter.setData(expListTitle,expListDetail);
+                    expListAdapter.notifyDataSetChanged();
+                }
+            }).setNeutralButton(R.string.lab3_sort_by_sex, new OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    sortKey=3;
+                    expListDetail=studentsCache.loadData(sortKey,getResources().getStringArray(R.array.lab3_sex_list));
+                    expListTitle = new ArrayList<>(expListDetail.keySet());
+                    expListAdapter.setData(expListTitle,expListDetail);
+                    expListAdapter.notifyDataSetChanged();
+                }
+            }).show();
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SORT_KEY, sortKey);
+    }
+
+
+
 }

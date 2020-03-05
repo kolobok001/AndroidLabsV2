@@ -7,6 +7,11 @@
     <string name="lab3_group_name">Group</string>
     <string name="lab3_sex">Sex</string>
     <string name="lab3_action_save">Save</string>
+    <string name="lab3_action_choice">Choice</string>
+    <string name="lab3_nosort">No sorting</string>
+    <string name="lab3_sort_by_group">By group</string>
+    <string name="lab3_sort_by_sex">By sex</string>
+    <string name="lab3_title_sorting">How to sort?</string>
     <string-array name="lab3_sex_list">
         <item>Men</item>
         <item>Girl</item>

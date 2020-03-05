@@ -13,4 +13,9 @@
     </string-array>
     <string name="lab3_error_already_exists">Такой студент уже существует</string>
     <string name="lab3_error_empty_fields">Все поля должны быть заполнены</string>
+    <string name="lab3_action_choice">Выбрать</string>
+    <string name="lab3_nosort">Без сорт.</string>
+    <string name="lab3_sort_by_group">По группе</string>
+    <string name="lab3_sort_by_sex">По полу</string>
+    <string name="lab3_title_sorting">Как отсортировать?</string>
 </resources>
