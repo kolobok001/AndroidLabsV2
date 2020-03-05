@@ -47,9 +47,11 @@ public class Lab3Activity extends AppCompatActivity {
 
     private StudentsAdapter studentsAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String[] sexList=getResources().getStringArray(R.array.lab3_sex_list);
 
         setTitle(getString(R.string.lab3_title, getClass().getSimpleName()));
 
@@ -74,7 +76,7 @@ public class Lab3Activity extends AppCompatActivity {
         необходимая для заполнения RecyclerView. В примере мы выводим пронумерованный список
         студентов, подробнее о работе адаптера в документации к классу StudentsAdapter.
          */
-        list.setAdapter(studentsAdapter = new StudentsAdapter());
+        list.setAdapter(studentsAdapter = new StudentsAdapter(sexList));
         studentsAdapter.setStudents(studentsCache.getStudents());
 
         /*

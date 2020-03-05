@@ -1,14 +1,22 @@
 package ru.tpu.courses.lab3.adapter;
 
 import android.view.ViewGroup;
+import  android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.content.Context;
 
+
+
+
+import ru.tpu.courses.lab3.R;
 import ru.tpu.courses.lab3.Student;
+
+
 
 /**
  * Задача Адаптера - управление View, которые содержатся в RecyclerView, с учётом его жизненного цикла.
@@ -49,7 +57,11 @@ import ru.tpu.courses.lab3.Student;
  * всё также будет работать с теми же закэшированными ViewHolder и не будет пересоздавать все View.
  */
 public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private String[] sexList;
+public StudentsAdapter (String[] sexList)
+{
+    this.sexList=sexList;
+}
     public static final int TYPE_NUMBER = 0;
     public static final int TYPE_STUDENT = 1;
 
@@ -69,6 +81,7 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
         switch (getItemViewType(position)) {
             case TYPE_NUMBER:
                 NumberHolder numberHolder = (NumberHolder) holder;
@@ -78,8 +91,9 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case TYPE_STUDENT:
                 StudentHolder studentHolder = (StudentHolder) holder;
                 Student student = students.get(position / 2);
+
                 studentHolder.student.setText(
-                        student.lastName + " " + student.firstName + " " + student.secondName
+                        student.lastName + " " + student.firstName + " " + student.secondName+" "+student.groupNumber+" "+sexList[student.sex]
                 );
                 break;
         }

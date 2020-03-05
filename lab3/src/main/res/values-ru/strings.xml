@@ -5,7 +5,12 @@
     <string name="lab3_second_name">Отчество</string>
     <string name="lab3_last_name">Фамилия</string>
     <string name="lab3_action_save">Сохранить</string>
-
+    <string name="lab3_group_name">Группа</string>
+    <string name="lab3_sex">Пол</string>
+    <string-array name="lab3_sex_list">
+        <item>Мужчина</item>
+        <item>Женщина</item>
+    </string-array>
     <string name="lab3_error_already_exists">Такой студент уже существует</string>
     <string name="lab3_error_empty_fields">Все поля должны быть заполнены</string>
 </resources>

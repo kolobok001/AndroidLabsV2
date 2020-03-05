@@ -7,4 +7,5 @@ dependencies {
 	implementation "androidx.appcompat:appcompat:$appcompat"
 	implementation "androidx.recyclerview:recyclerview:$recyclerview"
 	implementation "com.google.android.material:material:$material"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

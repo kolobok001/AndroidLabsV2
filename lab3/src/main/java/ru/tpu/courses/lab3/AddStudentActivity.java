@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,8 @@ public class AddStudentActivity extends AppCompatActivity {
     private EditText firstName;
     private EditText secondName;
     private EditText lastName;
+    private  EditText groupNumber;
+    private Spinner sex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,10 @@ public class AddStudentActivity extends AppCompatActivity {
         firstName = findViewById(R.id.first_name);
         secondName = findViewById(R.id.second_name);
         lastName = findViewById(R.id.last_name);
+        groupNumber=findViewById(R.id.group_number);
+        sex=findViewById(R.id.sex);
+
+
     }
 
     /**
@@ -78,13 +85,18 @@ public class AddStudentActivity extends AppCompatActivity {
             Student student = new Student(
                     firstName.getText().toString(),
                     secondName.getText().toString(),
-                    lastName.getText().toString()
+                    lastName.getText().toString(),
+                    groupNumber.getText().toString(),
+                    sex.getSelectedItemPosition()
+
             );
 
             // Проверяем, что все поля были указаны
             if (TextUtils.isEmpty(student.firstName) ||
                     TextUtils.isEmpty(student.secondName) ||
-                    TextUtils.isEmpty(student.lastName)) {
+                    TextUtils.isEmpty(student.lastName) ||
+                    TextUtils.isEmpty(student.groupNumber)
+                            )   {
                 // Класс Toast позволяет показать системное уведомление поверх всего UI
                 Toast.makeText(this, R.string.lab3_error_empty_fields, Toast.LENGTH_LONG).show();
                 return true;
@@ -95,6 +107,7 @@ public class AddStudentActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.lab3_error_already_exists, Toast.LENGTH_LONG).show();
                 return true;
             }
+
 
             // Сохраняем Intent с инфорамцией от этой Activity, который будет передан в onActivityResult
             // вызвавшей его Activity.
