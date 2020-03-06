@@ -112,13 +112,7 @@ AlertDialog dialog;
 
 
 
-        /*
-        При нажатии на кнопку мы переходим на Activity для добавления студента. Обратите внимание,
-        что здесь используется метод startActivityForResult. Этот метод позволяет организовывать
-        передачу данных обратно от запущенной Activity. В нашем случае, после закрытия AddStudentActivity,
-        у нашей Activity будет вызван метод onActivityResult, в котором будут данные, которые мы
-        указали перед закрытием AddStudentActivity.
-         */
+
         fab.setOnClickListener(
                 v -> startActivityForResult(
                         AddStudentActivity.newIntent(this),
@@ -127,18 +121,7 @@ AlertDialog dialog;
         );
     }
 
-    /**
-     * Этот метод вызывается после того, как мы ушли с запущенной с помощью метода
-     * {@link #startActivityForResult(Intent, int)} Activity.
-     *
-     * @param requestCode переданный в метод startActivityForResult requestCode, для случаев,
-     *                    когда с нашей активитизапускается несколько различных активити. По этому
-     *                    идентификатору мы их различаем.
-     * @param resultCode  идентификатор, описывающий, с каким результатом запущенная активити была
-     *                    завершена. Если пользователь просто закрыл Activity, то по умолчанию будет
-     *                    {@link #RESULT_CANCELED}.
-     * @param data        даные переданные нам от запущенной Activity.
-     */
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -152,9 +135,7 @@ AlertDialog dialog;
             expListAdapter.notifyDataSetChanged();
 
 
-//            studentsAdapter.setStudents(studentsCache.getStudents());
-//            studentsAdapter.notifyItemRangeInserted(studentsAdapter.getItemCount() - 2, 2);
-//
+
         }
     }
     @Override
@@ -204,7 +185,7 @@ AlertDialog dialog;
 
 
         return super.onOptionsItemSelected(item);
-    }
+    } //переопределение действия для alertDiaolog
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
