@@ -150,7 +150,7 @@ AlertDialog dialog;
         if (item.getItemId() ==R.id.action_choice) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.lab3_title_sorting)
-                    .setCancelable(false)
+                    .setCancelable(true)
                     .setPositiveButton(R.string.lab3_nosort, new OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

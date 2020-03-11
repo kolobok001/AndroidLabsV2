@@ -52,11 +52,11 @@ public int[] viewId1 = { 0,R.id.view21,R.id.view22,R.id.view23,R.id.view24,R.id.
         int height;
         int orientation = this.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            height = random.nextInt((int) Math.floor(widthScreen * 0.083)) + widthScreen/6;
+            height = random.nextInt((int) Math.floor(widthScreen/3 * 0.5)) + widthScreen/3;
         }
         else
         {
-             height=height = random.nextInt((int) Math.floor(widthScreen * 0.04 )) + widthScreen/12;
+             height=height = random.nextInt((int) Math.floor(widthScreen/6 * 0.5 )) + widthScreen/6;
 
         }
 
@@ -89,7 +89,7 @@ public int[] viewId1 = { 0,R.id.view21,R.id.view22,R.id.view23,R.id.view24,R.id.
                         Lab2ViewsContainerHorizontal lab2ViewsContainer;
                         lab2ViewsContainer = findViewById(viewId1[columnId + 1]);
                         int minusHeight = lab2ViewsContainer.getHeightView(rowId - 1, columnId+1 );
-                        lab2ViewsContainer.incrementViews(1, rowId, widthScreen / 3 - minusHeight, columnId + 1);
+                        lab2ViewsContainer.incrementViews(1, rowId, 2*widthScreen / 3 - minusHeight, columnId + 1);
                         viewsCount++;
 
                     }
@@ -104,7 +104,7 @@ public int[] viewId1 = { 0,R.id.view21,R.id.view22,R.id.view23,R.id.view24,R.id.
                         Lab2ViewsContainerHorizontal lab2ViewsContainer;
                         lab2ViewsContainer = findViewById(viewId1[1]);
                         int minusHeight = lab2ViewsContainer.getHeightView(rowId, 1);
-                        lab2ViewsContainer.incrementViews(1, rowId + 1, widthScreen / 3 - minusHeight, 1);
+                        lab2ViewsContainer.incrementViews(1, rowId + 1, 2*widthScreen / 3 - minusHeight, 1);
                         viewsCount = (rowId + 1) * 10 + 1;
 
                     }
@@ -122,7 +122,7 @@ public int[] viewId1 = { 0,R.id.view21,R.id.view22,R.id.view23,R.id.view24,R.id.
                         Lab2ViewsContainerHorizontal lab2ViewsContainer;
                         lab2ViewsContainer = findViewById(viewId2[columnId + 1]);
                         int minusHeight = lab2ViewsContainer.getHeightView(rowId - 1, columnId +1);
-                        lab2ViewsContainer.incrementViews(2, rowId, widthScreen / 6 - minusHeight, columnId + 1);
+                        lab2ViewsContainer.incrementViews(2, rowId, 2*widthScreen / 6 - minusHeight, columnId + 1);
                         viewsCount++;
 
                     }
@@ -137,7 +137,7 @@ public int[] viewId1 = { 0,R.id.view21,R.id.view22,R.id.view23,R.id.view24,R.id.
                         Lab2ViewsContainerHorizontal lab2ViewsContainer;
                         lab2ViewsContainer = findViewById(viewId2[1]);
                         int minusHeight = lab2ViewsContainer.getHeightView(rowId, 1);
-                        lab2ViewsContainer.incrementViews(2, rowId + 1, widthScreen / 6 - minusHeight, 1);
+                        lab2ViewsContainer.incrementViews(2, rowId + 1, 2*widthScreen / 6 - minusHeight, 1);
                         viewsCount = (rowId + 1) * 10 + 1;
 
                     }

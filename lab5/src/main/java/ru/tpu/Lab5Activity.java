@@ -8,9 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * <b>Знакомство с Android Studio и Git.</b>
- */
+
 public class Lab5Activity extends AppCompatActivity {
 
     public static Intent newIntent(@NonNull Context context) {
