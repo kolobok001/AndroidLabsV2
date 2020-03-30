@@ -44,7 +44,7 @@ public class Lab3Activity extends AppCompatActivity {
     private int sortKey;
     private static final String SORT_KEY = "sort_key";
 
-AlertDialog dialog;
+    AlertDialog dialog;
     ExpandableListView expListView;
     ListAdapter expListAdapter;
     List<String> expListTitle;

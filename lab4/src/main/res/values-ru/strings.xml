@@ -1,13 +1,23 @@
 <resources>
-    <string name="lab4_title">Я %s!</string>
 
+
+    <string name="lab4_action_add_photo">Добавить фото</string>
+    <string name="lab4_title">Я %s!</string>
     <string name="lab4_first_name">Имя</string>
     <string name="lab4_second_name">Отчество</string>
     <string name="lab4_last_name">Фамилия</string>
-
-    <string name="lab4_action_add_photo">Добавить фото</string>
     <string name="lab4_action_save">Сохранить</string>
-
-    <string name="lab4_error_empty_fields">Все поля должны быть заполнены</string>
+    <string name="lab4_group_name">Группа</string>
+    <string name="lab4_sex">Пол</string>
+    <string-array name="lab4_sex_list">
+        <item>Мужчина</item>
+        <item>Женщина</item>
+    </string-array>
     <string name="lab4_error_already_exists">Такой студент уже существует</string>
+    <string name="lab4_error_empty_fields">Все поля должны быть заполнены</string>
+    <string name="lab4_action_choice">Выбрать</string>
+    <string name="lab4_nosort">Без сорт.</string>
+    <string name="lab4_sort_by_group">По группе</string>
+    <string name="lab4_sort_by_sex">По полу</string>
+    <string name="lab4_title_sorting">Как отсортировать?</string>
 </resources>

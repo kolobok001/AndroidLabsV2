@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -15,24 +16,31 @@ import java.util.List;
  * https://developer.android.com/training/data-storage/room/accessing-data.html
  */
 @Dao
-public interface StudentDao {
-    @Query("SELECT * FROM student")
-    List<Student> getAll();
+public interface SortingDao {
+    @Query("SELECT * FROM Category")
+    List<Category> getAll();
 
     @Insert
-    void insert(@NonNull Student student);
+    void insert(@NonNull Category category);
+
+    @Query("SELECT id FROM SortKey")
+    List<SortKey> getSortKey();
 
     @Query(
-            "SELECT COUNT(*) FROM student WHERE " +
-                    "first_name = :firstName AND " +
-                    "second_name = :secondName AND " +
-                    "last_name = :lastName AND " +
-            "group_number = :groupNumber AND " +
-                    "sex = :sex"
+            "DELETE FROM sortkey"
     )
-    int count(@NonNull String firstName, @NonNull String secondName, @NonNull String lastName,@NonNull String groupNumber,@NonNull int sex);
+    void deleteSortKey();
+
+    @Insert
+    void insertSortKey(@NonNull SortKey sortKey);
+
+    @Query("UPDATE Category " +
+            "SET expanded = :expanded WHERE id=:id")
+    void update(@NonNull boolean expanded, @NonNull int id);
+
     @Query(
-            "SELECT COUNT(*) FROM student "
+            "SELECT COUNT(*) FROM SortKey "
     )
-    int countAll();
+    int countSortKey();
+
 }

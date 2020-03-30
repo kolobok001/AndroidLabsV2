@@ -9,10 +9,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="12dp">
+        <Spinner
+            android:id="@+id/sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:entries="@array/lab4_sex_list"
+            android:spinnerMode="dropdown" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/first_name"
@@ -24,7 +32,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/second_name"
@@ -36,7 +45,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/last_name"
@@ -44,6 +54,18 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/lab4_last_name"
                 />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/group_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lab4_group_name" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView

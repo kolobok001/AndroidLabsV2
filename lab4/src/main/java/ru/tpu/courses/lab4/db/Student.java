@@ -23,6 +23,12 @@ public class Student implements Parcelable {
     @NonNull
     @ColumnInfo(name = "last_name")
     public String lastName;
+    @NonNull
+    @ColumnInfo(name = "group_number")
+    public String groupNumber;
+    @NonNull
+    @ColumnInfo(name = "sex")
+    public int sex;
     @Nullable
     @ColumnInfo(name = "photo_path")
     public String photoPath;
@@ -31,12 +37,16 @@ public class Student implements Parcelable {
             @NonNull String firstName,
             @NonNull String secondName,
             @NonNull String lastName,
+            @NonNull String groupNumber,
+            @NonNull int sex,
             @Nullable String photoPath
     ) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.secondName = secondName;
         this.photoPath = photoPath;
+        this.groupNumber=groupNumber;
+        this.sex=sex;
     }
 
     protected Student(Parcel in) {
@@ -45,6 +55,8 @@ public class Student implements Parcelable {
         secondName = in.readString();
         lastName = in.readString();
         photoPath = in.readString();
+        sex=in.readInt();
+        groupNumber=in.readString();
     }
 
     public static final Creator<Student> CREATOR = new Creator<Student>() {
@@ -71,5 +83,7 @@ public class Student implements Parcelable {
         dest.writeString(secondName);
         dest.writeString(lastName);
         dest.writeString(photoPath);
+        dest.writeInt(sex);
+        dest.writeString(groupNumber);
     }
 }

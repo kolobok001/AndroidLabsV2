@@ -26,7 +26,7 @@ import androidx.room.RoomDatabase;
  * Room возвращает нам инстанс уже сгенерированной реализации БД.
  * </p>
  */
-@Database(entities = Student.class, version = 1, exportSchema = false)
+@Database(entities = {Student.class,Category.class,SortKey.class}, version = 1, exportSchema = false)
 public abstract class Lab4Database extends RoomDatabase {
 
     private static Lab4Database db;
@@ -62,4 +62,5 @@ public abstract class Lab4Database extends RoomDatabase {
     }
 
     public abstract StudentDao studentDao();
+    public abstract SortingDao sortingDao();
 }

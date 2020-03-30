@@ -6,8 +6,8 @@ buildscript {
         versionCode = 1
         versionName = '1.0.0'
 
-        minSdk = 16
-        compileSdk = 28
+        minSdk = 14
+        compileSdk =28
     }
 
     // Репозитории, в которых необходимо искать зависимости

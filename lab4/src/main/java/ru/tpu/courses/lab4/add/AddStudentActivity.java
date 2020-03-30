@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,8 @@ public class AddStudentActivity extends AppCompatActivity {
     private EditText firstName;
     private EditText secondName;
     private EditText lastName;
+    private EditText groupNumber;
+    private Spinner sex;
     private ImageView photo;
 
     private String photoPath;
@@ -76,6 +79,8 @@ public class AddStudentActivity extends AppCompatActivity {
         firstName = findViewById(R.id.first_name);
         secondName = findViewById(R.id.second_name);
         lastName = findViewById(R.id.last_name);
+        groupNumber=findViewById(R.id.group_number);
+        sex=findViewById(R.id.sex);
         photo = findViewById(R.id.photo);
 
         firstName.setText(studentPref.getFirstName());
@@ -95,7 +100,9 @@ public class AddStudentActivity extends AppCompatActivity {
                     firstName.getText().toString(),
                     secondName.getText().toString(),
                     lastName.getText().toString(),
-                    photoPath
+                    photoPath,
+                    groupNumber.getText().toString(),
+                    sex.getSelectedItemPosition()
             );
         }
     }
@@ -177,19 +184,23 @@ public class AddStudentActivity extends AppCompatActivity {
                 firstName.getText().toString(),
                 secondName.getText().toString(),
                 lastName.getText().toString(),
+                groupNumber.getText().toString(),
+                sex.getSelectedItemPosition(),
                 photoPath
         );
 
         // Проверяем, что все поля были указаны
         if (TextUtils.isEmpty(student.firstName) ||
                 TextUtils.isEmpty(student.secondName) ||
-                TextUtils.isEmpty(student.lastName)) {
+                TextUtils.isEmpty(student.lastName) ||
+                TextUtils.isEmpty(student.groupNumber)
+        ) {
             // Класс Toast позволяет показать системное уведомление поверх всего UI
             Toast.makeText(this, R.string.lab4_error_empty_fields, Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (studentDao.count(student.firstName, student.secondName, student.lastName) > 0) {
+        if (studentDao.count(student.firstName, student.secondName, student.lastName,student.groupNumber,student.sex) > 0) {
             Toast.makeText(
                     this,
                     R.string.lab4_error_already_exists,
@@ -203,7 +214,7 @@ public class AddStudentActivity extends AppCompatActivity {
         studentPref.clear();
 
         Intent data = new Intent();
-        data.putExtra(EXTRA_STUDENT, student);
+        data.putExtra(EXTRA_STUDENT,student);
         setResult(RESULT_OK, data);
         finish();
     }
