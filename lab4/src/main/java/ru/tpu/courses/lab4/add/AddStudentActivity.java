@@ -79,8 +79,8 @@ public class AddStudentActivity extends AppCompatActivity {
         firstName = findViewById(R.id.first_name);
         secondName = findViewById(R.id.second_name);
         lastName = findViewById(R.id.last_name);
-        groupNumber=findViewById(R.id.group_number);
-        sex=findViewById(R.id.sex);
+        groupNumber = findViewById(R.id.group_number);
+        sex = findViewById(R.id.sex);
         photo = findViewById(R.id.photo);
 
         firstName.setText(studentPref.getFirstName());
@@ -200,7 +200,7 @@ public class AddStudentActivity extends AppCompatActivity {
             return;
         }
 
-        if (studentDao.count(student.firstName, student.secondName, student.lastName,student.groupNumber,student.sex) > 0) {
+        if (studentDao.count(student.firstName, student.secondName, student.lastName, student.groupNumber, student.sex) > 0) {
             Toast.makeText(
                     this,
                     R.string.lab4_error_already_exists,
@@ -214,7 +214,7 @@ public class AddStudentActivity extends AppCompatActivity {
         studentPref.clear();
 
         Intent data = new Intent();
-        data.putExtra(EXTRA_STUDENT,student);
+        data.putExtra(EXTRA_STUDENT, student);
         setResult(RESULT_OK, data);
         finish();
     }

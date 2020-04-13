@@ -17,23 +17,19 @@ public class ListAdapter extends BaseExpandableListAdapter {
     private List<String> expListTitle;
     private HashMap<String, List<String>> expListDetail;
 
-    public ListAdapter(Context context, List<String> expListTitle,
-                       HashMap<String, List<String>> expListDetail) {
+    public ListAdapter(Context context, List<String> expListTitle,HashMap<String, List<String>> expListDetail) {
         this.context = context;
         this.expListTitle = expListTitle;
         this.expListDetail = expListDetail;
     }
-    public  void setData(List<String> expListTitle,HashMap<String, List<String>> expListDetail)
-    {
+    public  void setData(List<String> expListTitle,HashMap<String, List<String>> expListDetail) {
         this.expListDetail=expListDetail;
         this.expListTitle=expListTitle;
     }
 
     @Override
     public Object getChild(int listPosition, int expListPosition) {
-        return expListDetail.get(
-                expListTitle.get(listPosition)
-        ).get(expListPosition);
+        return expListDetail.get(expListTitle.get(listPosition)).get(expListPosition);
     }
 
     @Override

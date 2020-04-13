@@ -45,10 +45,9 @@ public class Lab4Activity extends AppCompatActivity {
     }
 
 
-
     private RecyclerView list;
     private FloatingActionButton fab;
-    private SortKey sortKey=new SortKey(1);
+    private SortKey sortKey = new SortKey(1);
     private StudentDao studentDao;
     private SortingDao sortingDao;
     private List<Category> category;
@@ -63,14 +62,12 @@ public class Lab4Activity extends AppCompatActivity {
     @NonNull
     public HashMap<String, List<String>> loadData(int key, String[] sexArray) {
         HashMap<String, List<String>> expDetails = new HashMap<>();
-
         ArrayList<Student> allStudent = new ArrayList<>(studentDao.getAll());
-
         ArrayList<String> group = new ArrayList<>();
         ArrayList<String> sexList = new ArrayList<>();
 
-        for (Student stud : allStudent
-        ) {
+        for (Student stud : allStudent)
+        {
             if (!group.contains(stud.groupNumber)) {
                 group.add(stud.groupNumber);
             }
@@ -81,8 +78,8 @@ public class Lab4Activity extends AppCompatActivity {
 
         switch (key) {
             case 1:
-                for (Student stud : allStudent
-                ) {
+                for (Student stud : allStudent)
+                {
                     ArrayList<String> infoStudent = new ArrayList<>();
                     infoStudent.add("Фамилия: " + stud.lastName);
                     infoStudent.add("Имя: " + stud.firstName);
@@ -93,34 +90,30 @@ public class Lab4Activity extends AppCompatActivity {
                 }
                 break;
             case 2:
-                for (String gr : group
-                ) {
+                for (String gr : group)
+                {
                     ArrayList<String> infoStudent = new ArrayList<>();
-                    for (Student stud : allStudent) {
+                    for (Student stud : allStudent)
+                    {
                         if (stud.groupNumber.equals(gr)) {
                             infoStudent.add(stud.lastName + " " + stud.firstName + " " + stud.secondName + " " + stud.groupNumber + " " + sexArray[stud.sex]);
-
                         }
                     }
                     expDetails.put(gr, infoStudent);
-
                 }
-
                 break;
             case 3:
-                for (String sex : sexList
-                ) {
+                for (String sex : sexList)
+                {
                     ArrayList<String> infoStudent = new ArrayList<>();
-                    for (Student stud : allStudent
-                    ) {
+                    for (Student stud : allStudent)
+                    {
                         if (sexArray[stud.sex] == sex) {
                             infoStudent.add(stud.lastName + " " + stud.firstName + " " + stud.secondName + " " + stud.groupNumber + " " + sexArray[stud.sex]);
-
                         }
                     }
 
                     expDetails.put(sex, infoStudent);
-
                 }
                 break;
         }
@@ -133,32 +126,30 @@ public class Lab4Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] sexList=getResources().getStringArray(R.array.lab4_sex_list);
+        String[] sexList = getResources().getStringArray(R.array.lab4_sex_list);
         studentDao = Lab4Database.getInstance(this).studentDao();
-        sortingDao=Lab4Database.getInstance(this).sortingDao();
+        sortingDao = Lab4Database.getInstance(this).sortingDao();
         setTitle(getString(R.string.lab4_title, getClass().getSimpleName()));
 
         setContentView(R.layout.lab4_activity);
         list = findViewById(android.R.id.list);
         fab = findViewById(R.id.fab);
-        if (sortingDao.countSortKey()!=1)
-        {
+        if (sortingDao.countSortKey() != 1) {
             sortingDao.deleteSortKey();
-            SortKey newSortKey=new SortKey(1);
+            SortKey newSortKey = new SortKey(1);
             sortingDao.insertSortKey(newSortKey);
         }
-        sortKey= sortingDao.getSortKey().get(0);
-        category=sortingDao.getAll();
+        sortKey = sortingDao.getSortKey().get(0);
+        category = sortingDao.getAll();
         expListView = (ExpandableListView) findViewById(R.id.expListView);
-        expListDetail=loadData(sortKey.id,sexList);
+        expListDetail = loadData(sortKey.id, sexList);
         expListTitle = new ArrayList<>(expListDetail.keySet());
         expListAdapter = new ListAdapter(this, expListTitle, expListDetail);
 
         expListView.setAdapter(expListAdapter);
         int c = expListView.getCount();
-        for ( int i = 0; i < c; i++)
-        {
-            if (!category.get(i).expanded )
+        for (int i = 0; i < c; i++) {
+            if (!category.get(i).expanded)
                 expListView.collapseGroup(i);
             else
                 expListView.expandGroup(i);
@@ -167,9 +158,9 @@ public class Lab4Activity extends AppCompatActivity {
             //подсказка при раскрытии списка
             @Override
             public void onGroupExpand(int groupPosition) {
-                 boolean boolNow=category.get(groupPosition).expanded;
-               category.get(groupPosition).expanded=!boolNow;
-               sortingDao.update(!boolNow,category.get(groupPosition).id);
+                boolean boolNow = category.get(groupPosition).expanded;
+                category.get(groupPosition).expanded = !boolNow;
+                sortingDao.update(!boolNow, category.get(groupPosition).id);
             }
         });
 
@@ -179,9 +170,9 @@ public class Lab4Activity extends AppCompatActivity {
             public void onGroupCollapse(int groupPosition) {
 
 
-                    boolean boolNow=category.get(groupPosition).expanded;
-                    category.get(groupPosition).expanded=!boolNow;
-                    sortingDao.update(!boolNow,category.get(groupPosition).id);
+                boolean boolNow = category.get(groupPosition).expanded;
+                category.get(groupPosition).expanded = !boolNow;
+                sortingDao.update(!boolNow, category.get(groupPosition).id);
             }
         });
 
@@ -196,8 +187,6 @@ public class Lab4Activity extends AppCompatActivity {
                 return false;
             }
         });
-
-
 
 
         fab.setOnClickListener(
@@ -216,39 +205,37 @@ public class Lab4Activity extends AppCompatActivity {
             Student student = AddStudentActivity.getResultStudent(data);
 
             studentDao.insert(student);
-            Category category=new Category(
-                    studentDao.countAll()-1,
+            Category category = new Category(
+                    studentDao.countAll() - 1,
                     false
-
             );
             sortingDao.insert(category);
             this.category.add(category);
 
-
-            expListDetail=loadData(sortKey.id,getResources().getStringArray(R.array.lab4_sex_list));
+            expListDetail = loadData(sortKey.id, getResources().getStringArray(R.array.lab4_sex_list));
             expListTitle = new ArrayList<>(expListDetail.keySet());
-            expListAdapter.setData(expListTitle,expListDetail);
+            expListAdapter.setData(expListTitle, expListDetail);
             expListAdapter.notifyDataSetChanged();
-
 
 
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.lab4_choise_sort, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         sortingDao.deleteSortKey();
         sortingDao.insertSortKey(sortKey);
     }
+
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         super.onStop();
         sortingDao.deleteSortKey();
         sortingDao.insertSortKey(sortKey);
@@ -257,7 +244,7 @@ public class Lab4Activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() ==R.id.action_choice) {
+        if (item.getItemId() == R.id.action_choice) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.lab4_title_sorting)
                     .setCancelable(true)
@@ -266,11 +253,11 @@ public class Lab4Activity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
 
 
-                            sortKey.id=1;
+                            sortKey.id = 1;
 
-                            expListDetail=loadData(sortKey.id,getResources().getStringArray(R.array.lab4_sex_list));
+                            expListDetail = loadData(sortKey.id, getResources().getStringArray(R.array.lab4_sex_list));
                             expListTitle = new ArrayList<>(expListDetail.keySet());
-                            expListAdapter.setData(expListTitle,expListDetail);
+                            expListAdapter.setData(expListTitle, expListDetail);
                             expListAdapter.notifyDataSetChanged();
 
                         }
@@ -278,22 +265,22 @@ public class Lab4Activity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
-                    sortKey.id=2;
+                    sortKey.id = 2;
 
-                    expListDetail=loadData(sortKey.id,getResources().getStringArray(R.array.lab4_sex_list));
+                    expListDetail = loadData(sortKey.id, getResources().getStringArray(R.array.lab4_sex_list));
                     expListTitle = new ArrayList<>(expListDetail.keySet());
-                    expListAdapter.setData(expListTitle,expListDetail);
+                    expListAdapter.setData(expListTitle, expListDetail);
                     expListAdapter.notifyDataSetChanged();
                 }
             }).setNeutralButton(R.string.lab4_sort_by_sex, new OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
-                    sortKey.id=3;
+                    sortKey.id = 3;
 
-                    expListDetail=loadData(sortKey.id,getResources().getStringArray(R.array.lab4_sex_list));
+                    expListDetail = loadData(sortKey.id, getResources().getStringArray(R.array.lab4_sex_list));
                     expListTitle = new ArrayList<>(expListDetail.keySet());
-                    expListAdapter.setData(expListTitle,expListDetail);
+                    expListAdapter.setData(expListTitle, expListDetail);
                     expListAdapter.notifyDataSetChanged();
                 }
             }).show();
@@ -303,9 +290,4 @@ public class Lab4Activity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     } //переопределение действия для alertDiaolog
-
-
-
-
-
 }
