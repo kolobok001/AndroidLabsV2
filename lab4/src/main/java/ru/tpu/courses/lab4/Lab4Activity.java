@@ -78,8 +78,7 @@ public class Lab4Activity extends AppCompatActivity {
 
         switch (key) {
             case 1:
-                for (Student stud : allStudent)
-                {
+                for (Student stud : allStudent) {
                     ArrayList<String> infoStudent = new ArrayList<>();
                     infoStudent.add("Фамилия: " + stud.lastName);
                     infoStudent.add("Имя: " + stud.firstName);
@@ -90,11 +89,9 @@ public class Lab4Activity extends AppCompatActivity {
                 }
                 break;
             case 2:
-                for (String gr : group)
-                {
+                for (String gr : group) {
                     ArrayList<String> infoStudent = new ArrayList<>();
-                    for (Student stud : allStudent)
-                    {
+                    for (Student stud : allStudent) {
                         if (stud.groupNumber.equals(gr)) {
                             infoStudent.add(stud.lastName + " " + stud.firstName + " " + stud.secondName + " " + stud.groupNumber + " " + sexArray[stud.sex]);
                         }
@@ -103,11 +100,9 @@ public class Lab4Activity extends AppCompatActivity {
                 }
                 break;
             case 3:
-                for (String sex : sexList)
-                {
+                for (String sex : sexList) {
                     ArrayList<String> infoStudent = new ArrayList<>();
-                    for (Student stud : allStudent)
-                    {
+                    for (Student stud : allStudent) {
                         if (sexArray[stud.sex] == sex) {
                             infoStudent.add(stud.lastName + " " + stud.firstName + " " + stud.secondName + " " + stud.groupNumber + " " + sexArray[stud.sex]);
                         }
@@ -251,10 +246,7 @@ public class Lab4Activity extends AppCompatActivity {
                     .setPositiveButton(R.string.lab4_nosort, new OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
-
                             sortKey.id = 1;
-
                             expListDetail = loadData(sortKey.id, getResources().getStringArray(R.array.lab4_sex_list));
                             expListTitle = new ArrayList<>(expListDetail.keySet());
                             expListAdapter.setData(expListTitle, expListDetail);
@@ -264,9 +256,7 @@ public class Lab4Activity extends AppCompatActivity {
                     }).setNegativeButton(R.string.lab4_sort_by_group, new OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
                     sortKey.id = 2;
-
                     expListDetail = loadData(sortKey.id, getResources().getStringArray(R.array.lab4_sex_list));
                     expListTitle = new ArrayList<>(expListDetail.keySet());
                     expListAdapter.setData(expListTitle, expListDetail);
@@ -275,9 +265,7 @@ public class Lab4Activity extends AppCompatActivity {
             }).setNeutralButton(R.string.lab4_sort_by_sex, new OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
                     sortKey.id = 3;
-
                     expListDetail = loadData(sortKey.id, getResources().getStringArray(R.array.lab4_sex_list));
                     expListTitle = new ArrayList<>(expListDetail.keySet());
                     expListAdapter.setData(expListTitle, expListDetail);

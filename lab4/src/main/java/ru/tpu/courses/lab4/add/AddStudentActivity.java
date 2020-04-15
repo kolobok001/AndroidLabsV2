@@ -193,8 +193,7 @@ public class AddStudentActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(student.firstName) ||
                 TextUtils.isEmpty(student.secondName) ||
                 TextUtils.isEmpty(student.lastName) ||
-                TextUtils.isEmpty(student.groupNumber)
-        ) {
+                TextUtils.isEmpty(student.groupNumber)) {
             // Класс Toast позволяет показать системное уведомление поверх всего UI
             Toast.makeText(this, R.string.lab4_error_empty_fields, Toast.LENGTH_LONG).show();
             return;
